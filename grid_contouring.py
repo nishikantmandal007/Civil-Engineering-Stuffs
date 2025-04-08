@@ -105,19 +105,19 @@ ax.set_ylim(-grid_spacing / 2, grid_dimension + grid_spacing / 2)
 
 # --- Add Instrument Symbol OUTSIDE Axes ---
 plt.subplots_adjust(bottom=0.15, top=0.9, right=0.9) # Adjust margins for symbols
-fig.text(0.39, 0.05, "Instrument\nPosition", ha='center', va='top', fontsize=9, color='red')
-fig.text(0.39, 0.07, u"▲", ha='center', va='bottom', fontsize=12, color='red')
+fig.text(0.30, 0.05, "Instrument\nPosition", ha='center', va='top', fontsize=9, color='red')
+fig.text(0.30, 0.07, u"▲", ha='center', va='bottom', fontsize=12, color='red')
 
-# --- Add Rotated Cardinal Direction Rose ---
-# Create a small inset axes in the top-right corner of the figure
-ax_rose = fig.add_axes([0.88, 0.86, 0.08, 0.08]) # Position near top right
-ax_rose.axis('off') # Hide the axes frame and ticks
+# --- Add Rotated Cardinal Direction Rose with Degrees ---
+# Create a small inset axes in the top-left corner (moved from top-right for colorbar)
+ax_rose = fig.add_axes([-0.01, 0.90, 0.1, 0.1]) # Position near top LEFT, slightly larger
+ax_rose.axis('off')
 
-# Define center and length for the rose arms (relative to the small axes 0-1 range)
 center_x, center_y = 0.5, 0.5
-arm_len = 0.35 # Slightly shorter to fit labels better
-label_dist = arm_len + 0.15 # Distance from center to place labels
-ref_len = arm_len + 0.05 # Length for reference cross
+arm_len = 0.30 # Shorter arms
+label_dist = arm_len + 0.18 # Distance for N,E,S,W labels
+ref_len = arm_len + 0.08 # Length for reference cross
+degree_dist = ref_len + 0.12 # Distance for degree labels
 
 # 1. Draw Reference Cross (aligned with map grid)
 ax_rose.plot([center_x - ref_len, center_x + ref_len], [center_y, center_y],
@@ -125,16 +125,17 @@ ax_rose.plot([center_x - ref_len, center_x + ref_len], [center_y, center_y],
 ax_rose.plot([center_x, center_x], [center_y - ref_len, center_y + ref_len],
              color='grey', linestyle=':', lw=1) # Vertical (Map North-South)
 
-# 2. Define True Cardinal Directions (Angles from Map +X axis)
-# North = 120 deg, East = 30 deg, South = -60 deg (300), West = 210 deg
-directions = {
-    'N': 120,
-    'E': 30,
-    'S': -60, # or 300
-    'W': 210  # or -150
-}
+# 2. Add Degree Labels for Reference Cross
+ax_rose.text(center_x + degree_dist, center_y, '0°', color='grey', fontsize=7, ha='left', va='center') # East
+ax_rose.text(center_x, center_y + degree_dist, '90°', color='grey', fontsize=7, ha='center', va='bottom') # North
+ax_rose.text(center_x - degree_dist, center_y, '180°', color='grey', fontsize=7, ha='right', va='center') # West
+ax_rose.text(center_x, center_y - degree_dist, '270°', color='grey', fontsize=7, ha='center', va='top') # South
 
-# 3. Draw Rotated Arms and Labels
+
+# 3. Define True Cardinal Directions (Angles from Map +X axis)
+directions = { 'N': 120, 'E': 30, 'S': -60, 'W': 210 }
+
+# 4. Draw Rotated Arms and Labels
 for label, angle_deg in directions.items():
     angle_rad = math.radians(angle_deg)
     # Arm endpoint
@@ -145,9 +146,10 @@ for label, angle_deg in directions.items():
     lab_y = center_y + label_dist * math.sin(angle_rad)
 
     # Draw arm
-    ax_rose.plot([center_x, end_x], [center_y, end_y], 'k-', lw=1.5) # Solid black line
+    ax_rose.plot([center_x, end_x], [center_y, end_y], 'k-', lw=1.5)
     # Draw label
     ax_rose.text(lab_x, lab_y, label, ha='center', va='center', fontsize=8, fontweight='bold')
+
 
 # --- SAVE FIGURE ---
 # **Important:** Add this line BEFORE plt.show()

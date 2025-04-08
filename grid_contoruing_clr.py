@@ -127,12 +127,12 @@ ax.set_ylim(-grid_spacing / 2, grid_dimension + grid_spacing / 2)
 # --- Add Instrument Symbol OUTSIDE Axes ---
 # Adjust layout to make space at the bottom and right (for colorbar)
 plt.subplots_adjust(bottom=0.15, top=0.9, right=0.85, left=0.1)
-fig.text(0.35, 0.05, "Instrument\nPosition", ha='center', va='top', fontsize=9, color='red')
-fig.text(0.35, 0.07, u"▲", ha='center', va='bottom', fontsize=12, color='red')
+fig.text(0.27, 0.05, "Instrument\nPosition", ha='center', va='top', fontsize=9, color='red')
+fig.text(0.27, 0.07, u"▲", ha='center', va='bottom', fontsize=12, color='red')
 
 # --- Add Rotated Cardinal Direction Rose with Degrees ---
 # Create a small inset axes in the top-left corner (moved from top-right for colorbar)
-ax_rose = fig.add_axes([0.08, 0.86, 0.1, 0.1]) # Position near top LEFT, slightly larger
+ax_rose = fig.add_axes([-0.01, 0.90, 0.1, 0.1]) # Position near top LEFT, slightly larger
 ax_rose.axis('off')
 
 center_x, center_y = 0.5, 0.5
