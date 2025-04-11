@@ -17,7 +17,7 @@ staff_readings_list = [
    [1.655, 1.735, 1.755, 1.820, 1.855, 1.800, 1.950, 2.040, 2.110, 2.060, 2.260],
    [1.695, 1.700, 1.700, 1.800, 1.850, 1.835, 1.965, 2.050, 2.120, 2.180, 2.240]
    ]
-HOI = 150.250  # Height of Instrument (m)
+HOI = 150.605  # Height of Instrument (m)
 grid_spacing = 2  # meters
 grid_dimension = 20 # meters
 
@@ -98,7 +98,7 @@ ax.set_yticks(y_coords)
 ax.grid(True, which='both', linestyle='--', linewidth=0.5, color='grey')
 ax.set_xlabel("Easting (m)")
 ax.set_ylabel("Northing (m)")
-ax.set_title(f"Contour Map (HOI = {HOI:.3f} m) \n Site: Area between Admin building and Mining Department")
+ax.set_title(f"Tacheometry (Contour Map) (HOI = {HOI:.3f} m) \n Site: Area between Admin building and Mining Department")
 ax.set_aspect('equal', adjustable='box')
 ax.set_xlim(-grid_spacing / 2, grid_dimension + grid_spacing / 2)
 ax.set_ylim(-grid_spacing / 2, grid_dimension + grid_spacing / 2)
